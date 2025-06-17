@@ -1,7 +1,11 @@
-Package: encrypt-package
-Version: 1.0
-Section: base
+Source: encrypt-package
+Maintainer: Saurav Saini <sainisaurav019@gmail.com>
+Section: misc
 Priority: optional
+Standards-Version: 4.5.1
+Build-Depends: debhelper (>> 10)
+
+Package: encrypt-package
 Architecture: all
-Maintainer: Your Name <your.email@example.com>
-Description: A tool to encrypt or decrypt files with AES-256 and base64.
+Depends: bash
+Description: Encrypt and decrypt files with AES-256
