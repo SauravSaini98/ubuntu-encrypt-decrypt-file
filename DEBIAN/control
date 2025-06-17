@@ -1,0 +1,7 @@
+Package: encrypt-package
+Version: 1.0
+Section: base
+Priority: optional
+Architecture: all
+Maintainer: Your Name <your.email@example.com>
+Description: A tool to encrypt or decrypt files with AES-256 and base64.

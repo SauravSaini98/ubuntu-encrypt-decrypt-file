@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ "" == "encrypt" ]; then
+    shift
+    encrypt ""
+elif [ "" == "decrypt" ]; then
+    shift
+    decrypt ""
+else
+    echo "Usage: encrypt-package encrypt <input_file> <output_file_base64>"
+    echo "       encrypt-package decrypt <input_file_base64> [<output_file>]"
+    exit 1
+fi

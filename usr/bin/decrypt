@@ -1,0 +1,46 @@
+#!/bin/bash
+
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+    echo "_______________________________________________"
+    echo "Decrypt a base64-encoded, AES-256 encrypted file."
+    echo "_______________________________________________"
+    echo ""
+    echo "Arguments:"
+    echo "  <input_file_base64>  Base64-encoded encrypted file"
+    echo " If [output_file] is provided, decrypts to that file."
+    echo " If [output_file] is not provided, prints plaintext to stdout."
+    echo ""
+    exit 1
+fi
+
+
+INPUT_FILE=$1
+OUTPUT_FILE=$2
+
+
+if [ -n "$OUTPUT_FILE" ] && [ -e "$OUTPUT_FILE" ]; then
+    read -p "File $OUTPUT_FILE already exists. Overwrite? (y/n) " ANSWER
+    if [ "$ANSWER" != "y" ]; then
+        echo "Aborting."
+        exit 1
+    fi
+fi
+
+read -s -p "Enter decryption key: " KEY
+echo
+
+TMP_FILE="$(mktemp)"
+
+base64 -d "$INPUT_FILE" > "$TMP_FILE"
+
+if [ -n "$OUTPUT_FILE" ]; then
+    openssl enc -d -aes-256-cbc -pbkdf2 -in "$TMP_FILE" -out "$OUTPUT_FILE" -pass pass:"$KEY"
+
+    echo "Done! Decrypted file is at $OUTPUT_FILE"
+
+else
+    openssl enc -d -aes-256-cbc -pbkdf2 -in "$TMP_FILE" -pass pass:"$KEY"
+
+fi
+
+rm "$TMP_FILE"
